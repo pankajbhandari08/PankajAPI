@@ -31,6 +31,7 @@ namespace PankajAPI
             services.AddControllers(options=> {
 
                 options.Filters.Add<JsonExceptionFilter>();
+                options.Filters.Add<RequireHttpsOrCloseAttribute>();
             });
 
             services.AddRouting(options => options.LowercaseUrls = true);
@@ -56,9 +57,12 @@ namespace PankajAPI
                 app.UseOpenApi();
                 app.UseSwaggerUi3();
             }
+            else
+            {
+                app.UseHsts();
+            }
 
-            app.UseHttpsRedirection();
-
+            
             app.UseRouting();
 
             app.UseAuthorization();
