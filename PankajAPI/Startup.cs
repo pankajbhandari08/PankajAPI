@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -30,6 +31,15 @@ namespace PankajAPI
 
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddSwaggerDocument();
+
+            services.AddApiVersioning(option =>
+            {
+                option.DefaultApiVersion = new ApiVersion(1, 0);
+                option.ApiVersionReader = new MediaTypeApiVersionReader();
+                option.AssumeDefaultVersionWhenUnspecified = true;
+                option.ReportApiVersions = true;
+                option.ApiVersionSelector = new CurrentImplementationApiVersionSelector(option);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
