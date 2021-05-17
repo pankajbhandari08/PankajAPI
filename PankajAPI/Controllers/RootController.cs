@@ -8,6 +8,7 @@ namespace PankajAPI.Controllers
     {
         [HttpGet(Name =nameof(GetRoot))]
         [ProducesResponseType(200)]
+        [ApiVersion("1.0")]
         public IActionResult GetRoot()
         {
             var response = new
