@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using PankajAPI.Filters;
 
 namespace PankajAPI
 {
@@ -27,7 +28,10 @@ namespace PankajAPI
         //This method adds the services to be used. THis is for DI
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(options=> {
+
+                options.Filters.Add<JsonExceptionFilter>();
+            });
 
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddSwaggerDocument();
